@@ -1,18 +1,18 @@
 import { test, expect } from '@playwright/test';
+import { Loginfile } from './Pages/Loginfile';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test.describe('End-to-End Login Test Suite', () => {
+  let loginPage: Loginfile;
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+  test.beforeEach(async ({ page }) => {
+    loginPage = new Loginfile(page);
+    await loginPage.navigateToLoginPage;
+  });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+  test('Successful Login Test', async () => {
+    await loginPage.login('Admin', 'admin123');
+    // Add assertions here to verify successful login
+    await expect(loginPage.loginButton.page()).toHaveURL('https://demo.openimis.org/front/dashboard/');
+  });
+});   
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-});
