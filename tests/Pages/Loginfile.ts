@@ -10,14 +10,14 @@ export class Loginfile{
 
         this.usernameInput=page.locator('input[type="text"]');
         this.passwordInput=page.locator('input[type="password"]');
-        this.loginButton=page.locator(':text-is("LOG IN")');
+        this.loginButton=page.locator(':text("LOG IN")')
     }
     async login(username:string,password:string){
         await this.usernameInput.fill(username);
         await this.passwordInput.fill(password);
         await this.loginButton.click();
     }  
-    async navigateToLoginPage(){
+    async navigate(){
         await this.loginButton.page().goto('https://demo.openimis.org/front/login/');
     }
     
